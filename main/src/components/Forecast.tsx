@@ -1,9 +1,10 @@
 interface ForecastInterface {
-  location: { city: string; state: string };
+  data: {};
 }
 
 export const Forecast: React.FC<ForecastInterface> = ({
-  location,
+  data,
 }): JSX.Element => {
+  console.log(data);
   return <div>Testing Forecast</div>;
 };

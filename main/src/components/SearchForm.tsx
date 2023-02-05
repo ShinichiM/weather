@@ -1,19 +1,37 @@
 import React from "react";
+import { Weather } from "../util/Weather";
 
 interface SearchFormInterface {
-  location: { city: string; state: string };
-  setLocation: (location: { city: string; state: string }) => void;
+  currData: {};
+  setCurrData: (data: {}) => void;
+  foreData: {};
+  setForeData: (data: {}) => void;
 }
 
 export const SearchForm: React.FC<SearchFormInterface> = ({
-  location,
-  setLocation,
+  currData,
+  setCurrData,
 }): JSX.Element => {
   let holdLocation = "";
   const locationSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const locationArr = holdLocation.match(/([^,]+)/g) || ["", ""];
-    setLocation({ city: locationArr[0], state: locationArr[1] });
+    const city = locationArr[0];
+    const state = locationArr[1];
+    const myWeather = new Weather(city, state);
+    myWeather.getCurrentWeather().then((data) => {
+      setCurrData({
+        temp: data.main.temp,
+        feelsLike: data.main.feels_like,
+        minTemp: data.main.temp_min,
+        maxTemp: data.main.temp_max,
+        description: data.weather[0].description,
+        windSpeed: data.wind.speed,
+        windDirection: data.wind.deg,
+      });
+    });
+    myWeather.getFiveDayForecast().then((data) => console.log(data));
+    // setLocation({ city: locationArr[0], state: locationArr[1] });
     // setLocation(location);
     // navigate({
     //   pathname: window.location.pathname,
