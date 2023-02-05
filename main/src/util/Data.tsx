@@ -1,10 +1,17 @@
 import { Weather } from "./Weather";
 
 export const WeatherData = (): JSX.Element => {
-  const weather = new Weather("Columbus", "Ohio", "US");
-  weather.getCurrentWeather();
-  weather.getFiveDayForecast();
+  const myWeather = new Weather("Columbus", "Ohio", "US");
 
+  // const currentWeather = myWeather.getCurrentWeather();
+  // const weatherForecast = myWeather.getFiveDayForecast();
+
+  // Promise.all([currentWeather, weatherForecast]).then(
+  //   ([currentWeather, weatherForecast]) => {
+  //     console.log(currentWeather);
+  //     console.log(weatherForecast);
+  //   }
+  // );
   return (
     <div>
       <ul>
