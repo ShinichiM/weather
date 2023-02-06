@@ -1,11 +1,12 @@
 import { forecastDataListTypes } from "./types";
+import { CurrentWeatherDataTypes } from "./types";
 
 export class Weather {
   private city: string;
   private state: string;
   private country: string;
   private forecast: Array<object>;
-  private current: object;
+  private current: any;
   private apiKey: string;
   private date: Date;
 

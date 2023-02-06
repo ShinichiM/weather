@@ -4,9 +4,10 @@ import { Current } from "../components/Current";
 import { Forecast } from "../components/Forecast";
 import { useState } from "react";
 import { Weather } from "../util/Weather";
+import { weatherDataTypes, dataUseStateInitialValue } from "../util/types";
 
 export const Home = (): JSX.Element => {
-  const [data, setData] = useState<object>({});
+  const [data, setData] = useState<any>({});
   const weather: Weather = new Weather("", "");
   return (
     <section className="main-bg-color min-vw-100 min-vh-100">

@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 
 interface SearchFormInterface {
   weather: Weather;
-  setData: (testData: object) => void;
+  setData: (data: any) => void;
 }
 
 export const SearchForm: React.FC<SearchFormInterface> = ({
@@ -88,17 +88,6 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
     });
   };
 
-  //   <form onSubmit={(e) => locationSubmitHandler(e)}>
-  //     <label htmlFor="location-search" className="text-color-secondary">
-  //       Location
-  //     </label>
-  //     <input
-  //       id="location-search"
-  //       placeholder="Search for a Location"
-  //       onChange={(e) => handleInputChange(e)}
-  //     />
-  //     <button type="submit">Search</button>
-  //   </form>
   return (
     <>
       <Form onSubmit={(e) => locationSubmitHandler(e)}>
