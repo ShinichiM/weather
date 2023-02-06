@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Weather } from "../util/Weather";
 import {
   forecastDataListMainTypes,
   forecastDataListTypes,
 } from "../util/types";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 interface SearchFormInterface {
   weather: Weather;
@@ -14,10 +16,13 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
   weather,
   setData,
 }): JSX.Element => {
-  let holdLocation = "";
+  const [locationInput, setLocationInput] = useState<string>("");
+
   const locationSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const locationArr = holdLocation.match(/([^,]+)/g) || ["", ""];
+    console.log(locationInput);
+
+    const locationArr = locationInput.match(/([^,]+)/g) || ["", ""];
     const city = locationArr[0];
     const state = locationArr[1];
 
@@ -83,21 +88,32 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
     });
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    holdLocation = event.target.value;
-  };
-
+  //   <form onSubmit={(e) => locationSubmitHandler(e)}>
+  //     <label htmlFor="location-search" className="text-color-secondary">
+  //       Location
+  //     </label>
+  //     <input
+  //       id="location-search"
+  //       placeholder="Search for a Location"
+  //       onChange={(e) => handleInputChange(e)}
+  //     />
+  //     <button type="submit">Search</button>
+  //   </form>
   return (
-    <form onSubmit={(e) => locationSubmitHandler(e)}>
-      <label htmlFor="location-search" className="text-color-secondary">
-        Location
-      </label>
-      <input
-        id="location-search"
-        placeholder="Search for a Location"
-        onChange={(e) => handleInputChange(e)}
-      />
-      <button type="submit">Search</button>
-    </form>
+    <>
+      <Form onSubmit={(e) => locationSubmitHandler(e)}>
+        <Form.Group className="mb-3" controlId="">
+          <Form.Label>Location Search</Form.Label>
+          <Form.Control
+            type=""
+            placeholder="Enter a Location"
+            onChange={(e) => setLocationInput(e.currentTarget.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </>
   );
 };

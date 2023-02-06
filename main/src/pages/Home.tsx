@@ -9,7 +9,7 @@ export const Home = (): JSX.Element => {
   const [data, setData] = useState<object>({});
   const weather: Weather = new Weather("", "");
   return (
-    <section className="main-bg-color w-100 h-100">
+    <section className="main-bg-color min-vw-100 min-vh-100">
       <Header />
       <SearchForm weather={weather} setData={setData} />
       <Current data={data} />
