@@ -1,16 +1,18 @@
 import React from "react";
 import { Weather } from "../util/Weather";
+import {
+  forecastDataListMainTypes,
+  forecastDataListTypes,
+} from "../util/types";
 
 interface SearchFormInterface {
-  currData: {};
-  setCurrData: (data: {}) => void;
-  foreData: {};
-  setForeData: (data: {}) => void;
+  weather: Weather;
+  setData: (testData: object) => void;
 }
 
 export const SearchForm: React.FC<SearchFormInterface> = ({
-  currData,
-  setCurrData,
+  weather,
+  setData,
 }): JSX.Element => {
   let holdLocation = "";
   const locationSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,9 +20,13 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
     const locationArr = holdLocation.match(/([^,]+)/g) || ["", ""];
     const city = locationArr[0];
     const state = locationArr[1];
-    const myWeather = new Weather(city, state);
-    myWeather.getCurrentWeather().then((data) => {
-      setCurrData({
+
+    weather.setCity(city);
+    weather.setState(state);
+
+    // get current weather
+    weather.getCurrentWeather().then((data) => {
+      weather.setCurrent({
         temp: data.main.temp,
         feelsLike: data.main.feels_like,
         minTemp: data.main.temp_min,
@@ -30,13 +36,51 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         windDirection: data.wind.deg,
       });
     });
-    myWeather.getFiveDayForecast().then((data) => console.log(data));
-    // setLocation({ city: locationArr[0], state: locationArr[1] });
-    // setLocation(location);
-    // navigate({
-    //   pathname: window.location.pathname,
-    //   search: "?" + new URLSearchParams({ location: location }).toString(),
-    // });
+    // get five day forecast data
+    weather.getFiveDayForecast().then((data) => {
+      const forecastData = data.list;
+      let holdData: Array<forecastDataListTypes> = [];
+
+      //   parse through list of data, 8 data points for each day.
+      let holdTemp = 0,
+        holdFeel = 0,
+        holdTempMin = 0,
+        holdTempMax = 0,
+        holdPressure = 0,
+        holdWindDeg = 0,
+        holdWindSpeed = 0;
+      forecastData.forEach((item: forecastDataListMainTypes, index: number) => {
+        holdTemp += item.main.temp;
+        holdFeel += item.main.temp;
+        holdTempMin += item.main.temp_min;
+        holdTempMax += item.main.temp_max;
+        holdPressure += item.main.pressure;
+        holdWindDeg += item.wind.deg;
+        holdWindSpeed += item.wind.speed;
+        if ((index + 1) % 8 === 0) {
+          holdData.push({
+            temp: holdTemp / 8,
+            feels_like: holdFeel / 8,
+            temp_max: holdTempMax / 8,
+            temp_min: holdTempMin / 8,
+            pressure: holdPressure / 8,
+            wind_degree: holdWindDeg / 8,
+            wind_speed: holdWindSpeed / 8,
+            humidity: 0,
+            description: item.weather[2],
+          });
+          holdTemp = 0;
+          holdFeel = 0;
+          holdTempMin = 0;
+          holdTempMax = 0;
+          holdPressure = 0;
+          holdWindDeg = 0;
+          holdWindSpeed = 0;
+        }
+      });
+      weather.setForecast(holdData);
+      setData({ ...weather });
+    });
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

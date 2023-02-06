@@ -1,49 +1,30 @@
+import { forecastDataListTypes } from "./types";
+
 export class Weather {
-  public city: string;
-  public state: string;
-  public country: string;
-  public temp: number;
-  public minTemp: number;
-  public humidity: number;
-  public maxTemp: number;
-  public pressure: number;
-  public windSpeed: number;
-  public windDirection: number;
-  public feelsLike: number;
-  public description: string;
-  public forecast: Array<object>;
+  private city: string;
+  private state: string;
+  private country: string;
+  private forecast: Array<object>;
+  private current: object;
   private apiKey: string;
+  private date: Date;
 
   constructor(
     city: string,
     state: string,
     country: string = "US",
     apiKey: string = "08de60513f8aaba79d4697d19640606f",
-    temp: number = 0,
-    humidity: number = 0,
-    minTemp: number = 0,
-    maxTemp: number = 0,
-    pressure: number = 0,
-    windSpeed: number = 0,
-    windDirection: number = 0,
-    feelsLike: number = 0,
-    description: string = "",
-    forecast: Array<object> = [{}]
+    current = {},
+    forecast: Array<forecastDataListTypes> = [],
+    date: Date = new Date()
   ) {
     this.city = city;
     this.state = state;
     this.country = country;
     this.apiKey = apiKey;
-    this.temp = temp;
-    this.humidity = humidity;
-    this.minTemp = minTemp;
-    this.maxTemp = maxTemp;
-    this.pressure = pressure;
-    this.windSpeed = windSpeed;
-    this.windDirection = windDirection;
-    this.feelsLike = feelsLike;
-    this.description = "";
+    this.current = current;
     this.forecast = forecast;
+    this.date = date;
   }
   getCity(): string {
     return this.city;
@@ -57,23 +38,14 @@ export class Weather {
   getApiKey(): string {
     return this.apiKey;
   }
-  getTemp(): number {
-    return this.temp;
-  }
-  getHumidity(): number {
-    return this.humidity;
-  }
-  getMinTemp(): number {
-    return this.minTemp;
-  }
-  getMaxTemp(): number {
-    return this.maxTemp;
-  }
-  getPressure(): number {
-    return this.pressure;
+  getCurrent(): object {
+    return this.current;
   }
   getForecast(): Array<object> {
     return this.forecast;
+  }
+  getDate(): Date {
+    return this.date;
   }
   setCity(city: string): void {
     this.city = city;
@@ -87,29 +59,20 @@ export class Weather {
   setApiKey(apiKey: string): void {
     this.apiKey = apiKey;
   }
-  setTemp(temp: number): void {
-    this.temp = temp;
-  }
-  setHumidity(humidity: number): void {
-    this.humidity = humidity;
-  }
-  setMinTemp(minTemp: number): void {
-    this.minTemp = minTemp;
-  }
-  setMaxTemp(maxTemp: number): void {
-    this.maxTemp = maxTemp;
-  }
-  setPressure(pressure: number): void {
-    this.pressure = pressure;
+  setDate(date: Date): void {
+    this.date = date;
   }
   setForecast(forecast: Array<object>): void {
     this.forecast = forecast;
   }
+  setCurrent(current: object): void {
+    this.current = current;
+  }
 
   async getCurrentWeather(): Promise<any> {
     const url = new URL("https://api.openweathermap.org/data/2.5/weather");
-    url.searchParams.append("q", this.city);
-    url.searchParams.append("appid", this.apiKey);
+    url.searchParams.append("q", this.getCity());
+    url.searchParams.append("appid", this.getApiKey());
     url.searchParams.append("units", "imperial");
 
     try {
@@ -139,10 +102,10 @@ export class Weather {
       return { error: error };
     }
   }
-  async getFiveDayForecast(): Promise<object> {
+  async getFiveDayForecast(): Promise<any> {
     const url = new URL("https://api.openweathermap.org/data/2.5/forecast");
-    url.searchParams.append("q", this.city);
-    url.searchParams.append("appid", this.apiKey);
+    url.searchParams.append("q", this.getCity());
+    url.searchParams.append("appid", this.getApiKey());
     url.searchParams.append("units", "imperial");
 
     try {

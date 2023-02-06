@@ -2,31 +2,18 @@ import { Header } from "../components/Header";
 import { SearchForm } from "../components/SearchForm";
 import { Current } from "../components/Current";
 import { Forecast } from "../components/Forecast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Weather } from "../util/Weather";
 
-interface HomeInterface {
-  location: { city: string; state: string };
-  setLocation: (location: { city: string; state: string }) => void;
-}
-
-export const Home: React.FC<HomeInterface> = ({
-  location,
-  setLocation,
-}): JSX.Element => {
-  const [currData, setCurrData] = useState({});
-  const [foreData, setForeData] = useState({});
-
+export const Home = (): JSX.Element => {
+  const [data, setData] = useState<object>({});
+  const weather: Weather = new Weather("", "");
   return (
     <section className="main-bg-color w-100 h-100">
       <Header />
-      <SearchForm
-        currData={currData}
-        setCurrData={setCurrData}
-        foreData={foreData}
-        setForeData={setForeData}
-      />
-      {currData && <Current data={currData} />}
-      {foreData && <Forecast data={foreData} />}
+      <SearchForm weather={weather} setData={setData} />
+      <Current data={data} />
+      <Forecast data={data} />
     </section>
   );
 };

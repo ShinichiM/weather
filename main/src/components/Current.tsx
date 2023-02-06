@@ -1,20 +1,11 @@
-import { Weather } from "../util/Weather";
-
 interface CurrentInterface {
-  data: {
-    // temp: number;
-    // feelsLike: number;
-    // minTemp: number;
-    // maxTemp: number;
-    // description: string;
-    // windSpeed: number;
-    // windDirection: number;
-  };
+  data: object;
 }
 
 export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
-  console.log(data);
-  // const test = new Weather("Columbus", "OH");
-  // const currentWeather: Promise<object> = test.getCurrentWeather();
-  return <div>Loading...</div>;
+  return Object.keys(data).length === 0 ? (
+    <div>Loading Current Weather ...</div>
+  ) : (
+    <div>We have data!</div>
+  );
 };
