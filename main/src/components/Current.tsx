@@ -7,7 +7,15 @@ interface CurrentInterface {
 
 export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
   return Object.keys(data).length === 0 ? (
-    <div>Loading Current Weather ...</div>
+    <Card>
+      <Card.Header>Whoops!</Card.Header>
+      <Card.Body>
+        <Card.Title>No Data Present</Card.Title>
+        <Card.Text>
+          Please search for a city!
+        </Card.Text>
+      </Card.Body>
+    </Card>
   ) : (
     <Card>
       <Card.Header>Current Weather</Card.Header>
