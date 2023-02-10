@@ -88,7 +88,7 @@ export const Forecast: React.FC<ForecastInterface> = ({
           <Card.Title> {moment().add(5, "days").format("dddd")} </Card.Title>
           <Card.Text>
             This card has supporting text below as a natural lead-in to
-            additional content.{" "}
+            additional content. WEATHER FOR 5TH DAY
           </Card.Text>
         </Card.Body>
         <Card.Footer>
