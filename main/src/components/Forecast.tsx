@@ -10,14 +10,20 @@ interface ForecastInterface {
 export const Forecast: React.FC<ForecastInterface> = ({
   data,
 }): JSX.Element => {
-  const dateArray = data.date ? data.date.toString().split(" ") : [];
-
-  const populateForecastData = (hasWeatherData: boolean): JSX.Element => {
+  const populateForecastData = (
+    hasWeatherData: boolean,
+    forecastData: any
+  ): JSX.Element => {
     let forecastJSX = [];
-    for (let i = 0; i < 5; i++) {
-      if (!hasWeatherData) {
+    // for (let i = 0; i < 5; i++) {
+    if (!forecastData) {
+      for (let i = 0; i < 5; i++) {
         forecastJSX.push(
-          <Card>
+          <Card
+            key={`forecast-${moment()
+              .add(i + 1, "days")
+              .format("dddd")}-${i}`}
+          >
             <Card.Header>
               {moment()
                 .add(i + 1, "days")
@@ -33,24 +39,33 @@ export const Forecast: React.FC<ForecastInterface> = ({
             </Card.Body>
           </Card>
         );
-      } else {
+      }
+    } else {
+      forecastData.forEach((item: any, index: number) => {
         forecastJSX.push(
-          <Card>
+          <Card
+            key={`forecast-${moment()
+              .add(index + 1, "days")
+              .format("dddd")}-${index}`}
+          >
             <Card.Header>
               {moment()
-                .add(i + 1, "days")
+                .add(index + 1, "days")
                 .format("ll")}
             </Card.Header>
             <Card.Body>
               <Card.Title>
                 {moment()
-                  .add(i + 1, "days")
+                  .add(index + 1, "days")
                   .format("dddd")}
               </Card.Title>
               <Card.Text>
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
+                <ul>
+                  <li>Temperature: {item.temp}ºF</li>
+                  <li>Min: {item.temp_min}ºF</li>
+                  <li>High: {item.temp_max}ºF</li>
+                  <li>Feels Like: {item.feels_like}ºF</li>
+                </ul>
               </Card.Text>
             </Card.Body>
             <Card.Footer>
@@ -61,9 +76,10 @@ export const Forecast: React.FC<ForecastInterface> = ({
             </Card.Footer>
           </Card>
         );
-      }
+      });
     }
+    // }
     return <CardGroup>{forecastJSX}</CardGroup>;
   };
-  return { ...populateForecastData(data.forecast) };
+  return { ...populateForecastData(data.forecast, data.forecast) };
 };
