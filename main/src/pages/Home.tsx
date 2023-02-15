@@ -4,7 +4,6 @@ import { Current } from "../components/Current";
 import { Forecast } from "../components/Forecast";
 import { useState } from "react";
 import { Weather } from "../util/Weather";
-import { weatherDataTypes, dataUseStateInitialValue } from "../util/types";
 
 export const Home = (): JSX.Element => {
   const [data, setData] = useState<any>({});

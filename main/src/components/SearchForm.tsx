@@ -32,13 +32,13 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
     // get current weather
     weather.getCurrentWeather().then((data) => {
       weather.setCurrent({
-        temp: data.main.temp,
-        feelsLike: data.main.feels_like,
-        minTemp: data.main.temp_min,
-        maxTemp: data.main.temp_max,
-        description: data.weather[0].description,
-        windSpeed: data.wind.speed,
-        windDirection: data.wind.deg,
+        temp: Math.round(data.main.temp),
+        feelsLike: Math.round(data.main.feels_like),
+        minTemp: Math.round(data.main.temp_min),
+        maxTemp: Math.round(data.main.temp_max),
+        description: Math.round(data.weather[0].description),
+        windSpeed: Math.round(data.wind.speed),
+        windDirection: Math.round(data.wind.deg),
       });
     });
     // get five day forecast data
@@ -64,13 +64,13 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         holdWindSpeed += item.wind.speed;
         if ((index + 1) % 8 === 0) {
           holdData.push({
-            temp: holdTemp / 8,
-            feels_like: holdFeel / 8,
-            temp_max: holdTempMax / 8,
-            temp_min: holdTempMin / 8,
-            pressure: holdPressure / 8,
-            wind_degree: holdWindDeg / 8,
-            wind_speed: holdWindSpeed / 8,
+            temp: Math.round(holdTemp / 8),
+            feels_like: Math.round(holdFeel / 8),
+            temp_max: Math.round(holdTempMax / 8),
+            temp_min: Math.round(holdTempMin / 8),
+            pressure: Math.round(holdPressure / 8),
+            wind_degree: Math.round(holdWindDeg / 8),
+            wind_speed: Math.round(holdWindSpeed / 8),
             humidity: 0,
             description: item.weather[2],
           });

@@ -10,12 +10,22 @@ interface ForecastInterface {
 export const Forecast: React.FC<ForecastInterface> = ({
   data,
 }): JSX.Element => {
-  const populateForecastData = (
-    hasWeatherData: boolean,
-    forecastData: any
-  ): JSX.Element => {
+  const colorByTemperature = (temp: number): { backgroundColor: string } => {
+    let style = { backgroundColor: "" };
+    if (temp < 32) {
+      style.backgroundColor = "#1ca9c9";
+    } else if (temp > 32 && temp < 50) {
+      style.backgroundColor = "#ffd966";
+    } else if (temp > 50 && temp < 70) {
+      style.backgroundColor = "#f6b26b";
+    } else {
+      style.backgroundColor = "#e06666";
+    }
+    return style;
+  };
+
+  const populateForecastData = (forecastData: any): JSX.Element => {
     let forecastJSX = [];
-    // for (let i = 0; i < 5; i++) {
     if (!forecastData) {
       for (let i = 0; i < 5; i++) {
         forecastJSX.push(
@@ -59,14 +69,29 @@ export const Forecast: React.FC<ForecastInterface> = ({
                   .add(index + 1, "days")
                   .format("dddd")}
               </Card.Title>
-              <Card.Text>
-                <ul>
-                  <li>Temperature: {item.temp}ºF</li>
-                  <li>Min: {item.temp_min}ºF</li>
-                  <li>High: {item.temp_max}ºF</li>
-                  <li>Feels Like: {item.feels_like}ºF</li>
-                </ul>
-              </Card.Text>
+              <ul>
+                <li className="w-50 d-flex justify-content-between">
+                  Temperature:
+                  <span
+                    style={colorByTemperature(item.feels_like)}
+                    className="ms-1 px-1 fw-bold rounded"
+                  >
+                    {item.temp}ºF
+                  </span>
+                </li>
+                <li className="w-50 d-flex justify-content-between">
+                  Min:
+                  <span className="ms-1 px-1 fw-bold rounded">
+                    {item.temp_min}ºF
+                  </span>
+                </li>
+                <li className="w-50 d-flex justify-content-between">
+                  High:
+                  <span className="ms-1 px-1 fw-bold rounded">
+                    {item.temp_max}ºF
+                  </span>
+                </li>
+              </ul>
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">
@@ -78,8 +103,7 @@ export const Forecast: React.FC<ForecastInterface> = ({
         );
       });
     }
-    // }
     return <CardGroup>{forecastJSX}</CardGroup>;
   };
-  return { ...populateForecastData(data.forecast, data.forecast) };
+  return { ...populateForecastData(data.forecast) };
 };
