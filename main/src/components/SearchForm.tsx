@@ -42,7 +42,7 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         windDirection: Math.round(data.wind.deg),
         icon: data.weather[0].icon,
         city: data.name,
-        humidity: data.main.humidity
+        humidity: data.main.humidity,
       });
     });
     // get five day forecast data
@@ -56,8 +56,11 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         holdTempMax = 0,
         holdPressure = 0,
         holdWindDeg = 0,
-        holdWindSpeed = 0;
+        holdWindSpeed = 0,
+        holdHumidity = 0;
       forecastData.forEach((item: forecastDataListMainTypes, index: number) => {
+        console.log(item);
+        holdHumidity += item.main.humidity;
         holdTemp += item.main.temp;
         holdFeel += item.main.temp;
         holdTempMin += item.main.temp_min;
@@ -74,9 +77,10 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
             pressure: Math.round(holdPressure / 8),
             wind_degree: Math.round(holdWindDeg / 8),
             wind_speed: Math.round(holdWindSpeed / 8),
-            humidity: 0,
+            humidity: Math.round(holdHumidity / 8),
             description: item.weather[0].description,
             icon: item.weather[0].icon,
+            city: city,
           });
           holdTemp = 0;
           holdFeel = 0;
@@ -85,6 +89,7 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
           holdPressure = 0;
           holdWindDeg = 0;
           holdWindSpeed = 0;
+          holdHumidity = 0;
         }
       });
       weather.setForecast(holdData);
@@ -94,18 +99,28 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
 
   return (
     <>
-      <Form onSubmit={(e) => locationSubmitHandler(e)}>
-        <Form.Group className="mb-3" controlId="">
-          <Form.Label>Location Search</Form.Label>
-          <Form.Control
-            type=""
-            placeholder="Enter a Location"
-            onChange={(e) => setLocationInput(e.currentTarget.value)}
-          />
+      <Form onSubmit={(e) => locationSubmitHandler(e)} className="mb-3">
+        <Form.Group
+          className="d-flex justify-content-between align-items-center"
+          controlId=""
+        >
+          <Form.Label style={{ color: "white" }} className="m-0">
+            Search for a City, State:{" "}
+          </Form.Label>
+          <div className="d-flex">
+            <Form.Control
+              type=""
+              placeholder="Enter a Location"
+              style={{ border: "none" }}
+              className="p-0"
+              onChange={(e) => setLocationInput(e.currentTarget.value)}
+            />
+
+            <Button variant="primary" type="submit" className="p-1">
+              <img src="/search-icon.svg" alt="search-icon" />
+            </Button>
+          </div>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </Form>
     </>
   );

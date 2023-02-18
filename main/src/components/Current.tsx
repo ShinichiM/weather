@@ -9,6 +9,17 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
   const currentWeatherData = data.current;
   console.log(currentWeatherData);
 
+  // const getImage = async () => {
+  //   const response = await fetch(
+  //     "https://api.unsplash.com/photos/random?client_id=RNTe81amegYNhpG8EFv6NOPUJI-LkQenjcd4uzKIREg"
+  //   );
+  //   return response;
+  // };
+
+  // getImage().then((response) => response.json());
+
+  //  backgroundImage: `url("/weather-image.jpg")`, backgroundSize: "100% 100%", backgroundRepeat: "no-repeat",border: "none"
+
   const colorByTemperature = (temp: number): { backgroundColor: string } => {
     let style = { backgroundColor: "" };
     if (temp < 32) {
@@ -31,21 +42,37 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
       </Card.Body>
     </Card>
   ) : (
-    <Card style={{ marginBottom: "0.75rem" }}>
+    <Card
+      style={{
+        marginBottom: "0.75rem",
+        // backgroundImage: `url("/weather-image.jpg")`,
+        // backgroundSize: "100% 100%",
+        // backgroundRepeat: "no-repeat",
+        // border: "none",
+      }}
+    >
       <Card.Header>
         <ul className="p-0 m-0 d-flex justify-content-between">
           <li>{moment().format("ll")}</li>
           <li>
-            {new Date().toLocaleTimeString().split(" ")[0].substring(0, 5)}{" "}
+            {Math.abs(new Date().getHours() - 12) > 9
+              ? new Date().toLocaleTimeString().split(" ")[0].substring(0, 4)
+              : new Date()
+                  .toLocaleTimeString()
+                  .split(" ")[0]
+                  .substring(0, 5)}{" "}
             {new Date().toLocaleTimeString().split(" ")[1]}
           </li>
         </ul>
       </Card.Header>
       <Card.Body>
         <Card.Title className="margin-padding-none">
-          <span className="mobile-font-size fw-bold">
-            {moment().format("dddd")}
-          </span>
+          <div className="d-flex flex-column">
+            <span style={{ color: "red" }}>{currentWeatherData.city}</span>
+            <span className="mobile-font-size fw-bold">
+              {moment().format("dddd")}
+            </span>
+          </div>
         </Card.Title>
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex flex-column">
@@ -81,13 +108,17 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
             Wind:
             <div>
               <span className="fw-bold rounded text-center">
-                {Math.round(currentWeatherData.windSpeed * 2.23694)}mph
+                {Math.round(currentWeatherData.windSpeed)}mph
               </span>{" "}
               <img
                 src="/direction.svg"
                 alt="direction"
                 className="arrow-size m-0 p-0"
-                style={{transform: `rotate(${currentWeatherData.windDirection - 180}deg)`}}
+                style={{
+                  transform: `rotate(${
+                    currentWeatherData.windDirection - 180
+                  }deg)`,
+                }}
               />
             </div>
           </li>

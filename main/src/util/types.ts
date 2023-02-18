@@ -25,6 +25,7 @@ export type forecastDataListTypes = {
   wind_degree: number;
   description: string;
   icon: string;
+  city: string;
 };
 
 export type weatherDataTypes = {
