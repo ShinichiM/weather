@@ -9,17 +9,6 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
   const currentWeatherData = data.current;
   console.log(currentWeatherData);
 
-  // const getImage = async () => {
-  //   const response = await fetch(
-  //     "https://api.unsplash.com/photos/random?client_id=RNTe81amegYNhpG8EFv6NOPUJI-LkQenjcd4uzKIREg"
-  //   );
-  //   return response;
-  // };
-
-  // getImage().then((response) => response.json());
-
-  //  backgroundImage: `url("/weather-image.jpg")`, backgroundSize: "100% 100%", backgroundRepeat: "no-repeat",border: "none"
-
   const colorByTemperature = (temp: number): { backgroundColor: string } => {
     let style = { backgroundColor: "" };
     if (temp < 32) {
