@@ -72,11 +72,11 @@ export const Forecast: React.FC<ForecastInterface> = ({
                     ? new Date()
                         .toLocaleTimeString()
                         .split(" ")[0]
-                        .substring(0, 4)
+                        .substring(0, 5)
                     : new Date()
                         .toLocaleTimeString()
                         .split(" ")[0]
-                        .substring(0, 5)}{" "}
+                        .substring(0, 4)}{" "}
                   {new Date().toLocaleTimeString().split(" ")[1]}
                 </li>
               </ul>
@@ -181,7 +181,7 @@ export const Forecast: React.FC<ForecastInterface> = ({
         );
       });
     }
-    return <CardGroup>{forecastJSX}</CardGroup>;
+    return <CardGroup className="forecast-weather-container-desktop">{forecastJSX}</CardGroup>;
   };
   const holdDataTest = [];
   const popualteForecastTest = (forecastData: any) => {

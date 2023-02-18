@@ -23,7 +23,10 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
     return style;
   };
   return Object.keys(data).length === 0 ? (
-    <Card style={{ marginBottom: "0.75rem" }}>
+    <Card
+      style={{ marginBottom: "0.75rem" }}
+      className="current-weather-container-desktop"
+    >
       <Card.Header>{moment().format("ll")}</Card.Header>
       <Card.Body>
         <Card.Title>No Data Present</Card.Title>
@@ -39,17 +42,18 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
         // backgroundRepeat: "no-repeat",
         // border: "none",
       }}
+      className="current-weather-container-desktop"
     >
       <Card.Header>
         <ul className="p-0 m-0 d-flex justify-content-between">
           <li>{moment().format("ll")}</li>
           <li>
             {Math.abs(new Date().getHours() - 12) > 9
-              ? new Date().toLocaleTimeString().split(" ")[0].substring(0, 4)
+              ? new Date().toLocaleTimeString().split(" ")[0].substring(0, 5)
               : new Date()
                   .toLocaleTimeString()
                   .split(" ")[0]
-                  .substring(0, 5)}{" "}
+                  .substring(0, 4)}{" "}
             {new Date().toLocaleTimeString().split(" ")[1]}
           </li>
         </ul>

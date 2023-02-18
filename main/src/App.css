@@ -1,5 +1,5 @@
 :root {
-/*#0E1C36  */
+  /*#0E1C36  */
   --main-primary-color: #262626;
   --main-secondary-color: #e2e8ce;
 }
@@ -56,6 +56,24 @@ ul li {
   padding: 0 !important;
 }
 
+/* @media */
+@media only screen and (min-width: 1080px) {
+  .current-weather-container-desktop {
+    width: 90vw !important;
+    margin: 0 auto 1rem auto !important;
+  }
+  .mobile-font-size {
+    font-size: 2.5vw;
+  }
+  .forecast-weather-container-desktop {
+    width: 90vw !important;
+    margin: 0 auto 1rem auto !important;
+  }
+  .desktop-container {
+    width: 90vw !important;
+    margin: 0 auto 0 auto !important;
+  }
+}
 /* .weather-temp-container {
   margin-left: ""
 } */

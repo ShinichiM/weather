@@ -98,30 +98,31 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
   };
 
   return (
-    <>
-      <Form onSubmit={(e) => locationSubmitHandler(e)} className="mb-3">
-        <Form.Group
-          className="d-flex justify-content-between align-items-center"
-          controlId=""
-        >
-          <Form.Label style={{ color: "white" }} className="m-0">
-            Search for a City, State:{" "}
-          </Form.Label>
-          <div className="d-flex">
-            <Form.Control
-              type=""
-              placeholder="Enter a Location"
-              style={{ border: "none" }}
-              className="p-0"
-              onChange={(e) => setLocationInput(e.currentTarget.value)}
-            />
+    <Form
+      onSubmit={(e) => locationSubmitHandler(e)}
+      className="mb-3 desktop-container"
+    >
+      <Form.Group
+        className="d-flex justify-content-between align-items-center"
+        controlId=""
+      >
+        <Form.Label style={{ color: "white" }} className="m-0">
+          Search for a City, State:{" "}
+        </Form.Label>
+        <div className="d-flex">
+          <Form.Control
+            type=""
+            placeholder="Enter a Location"
+            style={{ border: "none" }}
+            className="p-0"
+            onChange={(e) => setLocationInput(e.currentTarget.value)}
+          />
 
-            <Button variant="primary" type="submit" className="p-1">
-              <img src="/search-icon.svg" alt="search-icon" />
-            </Button>
-          </div>
-        </Form.Group>
-      </Form>
-    </>
+          <Button variant="primary" type="submit" className="p-1">
+            <img src="/search-icon.svg" alt="search-icon" />
+          </Button>
+        </div>
+      </Form.Group>
+    </Form>
   );
 };
