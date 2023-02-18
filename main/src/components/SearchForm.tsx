@@ -41,6 +41,8 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         windSpeed: Math.round(data.wind.speed),
         windDirection: Math.round(data.wind.deg),
         icon: data.weather[0].icon,
+        city: data.name,
+        humidity: data.main.humidity
       });
     });
     // get five day forecast data

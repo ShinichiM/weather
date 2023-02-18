@@ -59,34 +59,35 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
           />
         </div>
         <ul className="p-0 m-0 d-flex justify-content-around">
-          <li className="d-flex justify-content-between flex-column">
-            Feels Like:
-            <span className="fw-bold rounded">
-              {currentWeatherData.feelsLike}ºF
-            </span>
-          </li>
           <li className=" d-flex justify-content-between flex-column">
-            Minimum:
-            <span className="fw-bold rounded ">
+            Low:
+            <span className="fw-bold rounded text-center">
               {currentWeatherData.minTemp}ºF
             </span>
           </li>
           <li className=" d-flex justify-content-between flex-column">
             High:
-            <span className="fw-bold rounded">
+            <span className="fw-bold rounded text-center">
               {currentWeatherData.maxTemp}ºF
+            </span>
+          </li>
+          <li className=" d-flex justify-content-between flex-column">
+            Humidity:
+            <span className="fw-bold rounded text-center">
+              {currentWeatherData.humidity}%
             </span>
           </li>
           <li className=" d-flex justify-content-between flex-column">
             Wind:
             <div>
-              <span className="fw-bold rounded">
+              <span className="fw-bold rounded text-center">
                 {Math.round(currentWeatherData.windSpeed * 2.23694)}mph
               </span>{" "}
               <img
                 src="/direction.svg"
                 alt="direction"
                 className="arrow-size m-0 p-0"
+                style={{transform: `rotate(${currentWeatherData.windDirection - 180}deg)`}}
               />
             </div>
           </li>
