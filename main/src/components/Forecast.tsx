@@ -1,6 +1,5 @@
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
-import { weatherDataTypes } from "../util/types";
 import moment from "moment";
 
 interface ForecastInterface {
@@ -10,12 +9,13 @@ interface ForecastInterface {
 export const Forecast: React.FC<ForecastInterface> = ({
   data,
 }): JSX.Element => {
+  console.log(data);
   const colorByTemperature = (temp: number): { backgroundColor: string } => {
     let style = { backgroundColor: "" };
     if (temp < 32) {
       style.backgroundColor = "#1ca9c9";
     } else if (temp > 32 && temp < 50) {
-      style.backgroundColor = "#ffd966";
+      style.backgroundColor = "#6fa8dc";
     } else if (temp > 50 && temp < 70) {
       style.backgroundColor = "#f6b26b";
     } else {
@@ -59,9 +59,20 @@ export const Forecast: React.FC<ForecastInterface> = ({
               .format("dddd")}-${index}`}
           >
             <Card.Header>
-              {moment()
-                .add(index + 1, "days")
-                .format("ll")}
+              <ul className="p-0 m-0 d-flex justify-content-between">
+                <li>
+                  {moment()
+                    .add(index + 1, "days")
+                    .format("ll")}
+                </li>
+                <li>
+                  {new Date()
+                    .toLocaleTimeString()
+                    .split(" ")[0]
+                    .substring(0, 5)}{" "}
+                  {new Date().toLocaleTimeString().split(" ")[1]}
+                </li>
+              </ul>
             </Card.Header>
             <Card.Body>
               <Card.Title>
@@ -69,29 +80,36 @@ export const Forecast: React.FC<ForecastInterface> = ({
                   .add(index + 1, "days")
                   .format("dddd")}
               </Card.Title>
-              <ul>
-                <li className="w-50 d-flex justify-content-between">
-                  Temperature:
-                  <span
-                    style={colorByTemperature(item.feels_like)}
-                    className="ms-1 px-1 fw-bold rounded"
-                  >
-                    {item.temp}ºF
-                  </span>
-                </li>
-                <li className="w-50 d-flex justify-content-between">
-                  Min:
-                  <span className="ms-1 px-1 fw-bold rounded">
-                    {item.temp_min}ºF
-                  </span>
-                </li>
-                <li className="w-50 d-flex justify-content-between">
-                  High:
-                  <span className="ms-1 px-1 fw-bold rounded">
-                    {item.temp_max}ºF
-                  </span>
-                </li>
-              </ul>
+              <div className="d-flex">
+                <ul className="w-50">
+                  <li className=" d-flex justify-content-between">
+                    Temperature:
+                    <span
+                      style={colorByTemperature(item.feels_like)}
+                      className="ms-1 px-1 fw-bold rounded"
+                    >
+                      {item.temp}ºF
+                    </span>
+                  </li>
+                  <li className=" d-flex justify-content-between">
+                    Min:
+                    <span className="ms-1 px-1 fw-bold rounded">
+                      {item.temp_min}ºF
+                    </span>
+                  </li>
+                  <li className="d-flex justify-content-between">
+                    High:
+                    <span className="ms-1 px-1 fw-bold rounded">
+                      {item.temp_max}ºF
+                    </span>
+                  </li>
+                </ul>
+                <img
+                  src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
+                  alt="weather-icon"
+                  className="ms-5"
+                />
+              </div>
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">

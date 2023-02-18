@@ -11,7 +11,7 @@ export type forecastDataListMainTypes = {
     speed: number;
     deg: number;
   };
-  weather: [id: number, main: string, description: string];
+  weather: [{ id: number; main: string; description: string; icon: string }];
 };
 
 export type forecastDataListTypes = {
@@ -24,6 +24,7 @@ export type forecastDataListTypes = {
   wind_speed: number;
   wind_degree: number;
   description: string;
+  icon: string;
 };
 
 export type weatherDataTypes = {

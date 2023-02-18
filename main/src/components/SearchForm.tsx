@@ -31,21 +31,22 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
 
     // get current weather
     weather.getCurrentWeather().then((data) => {
+      console.log(data);
       weather.setCurrent({
         temp: Math.round(data.main.temp),
         feelsLike: Math.round(data.main.feels_like),
         minTemp: Math.round(data.main.temp_min),
         maxTemp: Math.round(data.main.temp_max),
-        description: Math.round(data.weather[0].description),
+        description: data.weather[0].description,
         windSpeed: Math.round(data.wind.speed),
         windDirection: Math.round(data.wind.deg),
+        icon: data.weather[0].icon,
       });
     });
     // get five day forecast data
     weather.getFiveDayForecast().then((data) => {
       const forecastData = data.list;
       let holdData: Array<forecastDataListTypes> = [];
-
       //   parse through list of data, 8 data points for each day.
       let holdTemp = 0,
         holdFeel = 0,
@@ -72,7 +73,8 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
             wind_degree: Math.round(holdWindDeg / 8),
             wind_speed: Math.round(holdWindSpeed / 8),
             humidity: 0,
-            description: item.weather[2],
+            description: item.weather[0].description,
+            icon: item.weather[0].icon,
           });
           holdTemp = 0;
           holdFeel = 0;

@@ -43,6 +43,19 @@ ul li {
   height: 100vh;
 }
 
+.mobile-font-size {
+  font-size: 10vw;
+}
+
+.arrow-size {
+  width: 3vw;
+  height: 2vh;
+}
+.margin-padding-none {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* .weather-temp-container {
   margin-left: ""
 } */
