@@ -9,7 +9,6 @@ interface ForecastInterface {
 export const Forecast: React.FC<ForecastInterface> = ({
   data,
 }): JSX.Element => {
-  console.log(data);
   const colorByTemperature = (temp: number): { backgroundColor: string } => {
     let style = { backgroundColor: "" };
     if (temp < 32) {
@@ -52,77 +51,41 @@ export const Forecast: React.FC<ForecastInterface> = ({
       }
     } else {
       forecastData.forEach((item: any, index: number) => {
-        console.log(item);
         forecastJSX.push(
           <Card
             key={`forecast-${moment()
               .add(index + 1, "days")
               .format("dddd")}-${index}`}
-            style={{ padding: "0", width: "100vw" }}
+            style={{
+              padding: "0",
+              width: "100vw",
+              backgroundColor: "#262626",
+              opacity: "75%",
+              border: "0.1rem solid black",
+            }}
           >
-            <Card.Header>
+            <Card.Header
+              style={{ color: "white", borderBottom: "0.1rem solid black" }}
+            >
               <ul className="p-0 m-0 d-flex justify-content-between">
                 <li>
                   {moment()
                     .add(index + 1, "days")
                     .format("ll")}
                 </li>
-                <li>
-                  {Math.abs(new Date().getHours() - 12) > 9
-                    ? new Date()
-                        .toLocaleTimeString()
-                        .split(" ")[0]
-                        .substring(0, 5)
-                    : new Date()
-                        .toLocaleTimeString()
-                        .split(" ")[0]
-                        .substring(0, 4)}{" "}
-                  {new Date().toLocaleTimeString().split(" ")[1]}
-                </li>
               </ul>
             </Card.Header>
-            <Card.Body>
+            <Card.Body style={{ color: "white" }}>
               <Card.Title>
                 <div className="d-flex flex-column">
                   <span style={{ color: "red" }}>{item.city}</span>
-                  <span className="mobile-font-size fw-bold">
+                  <span className=" fw-bold">
                     {moment()
                       .add(index + 1, "days")
                       .format("dddd")}
                   </span>
                 </div>
               </Card.Title>
-              {/* <div className="d-flex">
-                <ul className="w-50">
-                  <li className=" d-flex justify-content-between">
-                    Temperature:
-                    <span
-                      style={colorByTemperature(item.feels_like)}
-                      className="ms-1 px-1 fw-bold rounded"
-                    >
-                      {item.temp}ºF
-                    </span>
-                  </li>
-                  <li className=" d-flex justify-content-between">
-                    Min:
-                    <span className="ms-1 px-1 fw-bold rounded">
-                      {item.temp_min}ºF
-                    </span>
-                  </li>
-                  <li className="d-flex justify-content-between">
-                    High:
-                    <span className="ms-1 px-1 fw-bold rounded">
-                      {item.temp_max}ºF
-                    </span>
-                  </li>
-                </ul>
-                <img
-                  src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
-                  alt="weather-icon"
-                  className="ms-5"
-                />
-              </div> */}
-
               <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex flex-column">
                   <span className="fs-1 fw-bold">{item.temp}ºF</span>
@@ -131,34 +94,34 @@ export const Forecast: React.FC<ForecastInterface> = ({
                 <img
                   src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                   alt="weather-icon"
-                  className="ms-5"
+                  className="forecast-icon"
                 />
               </div>
-              <ul className="p-0 m-0 d-flex justify-content-around">
-                <li className=" d-flex justify-content-between flex-column">
+              <ul className="forecast-cards">
+                <li className=" forecast-cards-details">
                   Low:
-                  <span className="fw-bold rounded text-center">
+                  <span className="fw-bold rounded text-center forecast-cards-details-text-space">
                     {item.temp_min}ºF
                   </span>
                 </li>
-                <li className=" d-flex justify-content-between flex-column">
+                <li className=" forecast-cards-details">
                   High:
-                  <span className="fw-bold rounded text-center">
+                  <span className="fw-bold rounded text-center forecast-cards-details-text-space">
                     {item.temp_max}ºF
                   </span>
                 </li>
-                <li className=" d-flex justify-content-between flex-column">
+                <li className=" forecast-cards-details">
                   Humidity:
-                  <span className="fw-bold rounded text-center">
+                  <span className="fw-bold rounded text-center forecast-cards-details-text-space">
                     {item.humidity}%
                   </span>
                 </li>
-                <li className=" d-flex justify-content-between flex-column">
+                <li className=" forecast-cards-details">
                   Wind:
                   <div>
-                    <span className="fw-bold rounded text-center">
+                    <span className="fw-bold rounded text-center forecast-cards-details-text-space">
                       {Math.round(item.wind_speed)}mph
-                    </span>{" "}
+                    </span>
                     <img
                       src="/direction.svg"
                       alt="direction"
@@ -173,15 +136,19 @@ export const Forecast: React.FC<ForecastInterface> = ({
             </Card.Body>
             <Card.Footer>
               <small className="text-muted">
-                Data retrieved {new Date().getMonth() + 1}/
-                {new Date().getDate()}/{new Date().getFullYear()}
+                Retrieved {new Date().getMonth() + 1}/{new Date().getDate()}/
+                {new Date().getFullYear()}
               </small>
             </Card.Footer>
           </Card>
         );
       });
     }
-    return <CardGroup className="forecast-weather-container-desktop">{forecastJSX}</CardGroup>;
+    return (
+      <CardGroup className="forecast-weather-container-desktop">
+        {forecastJSX}
+      </CardGroup>
+    );
   };
   const holdDataTest = [];
   const popualteForecastTest = (forecastData: any) => {

@@ -10,17 +10,25 @@ import Form from "react-bootstrap/Form";
 interface SearchFormInterface {
   weather: Weather;
   setData: (data: any) => void;
+  setBgImage: (url: any) => void;
 }
 
 export const SearchForm: React.FC<SearchFormInterface> = ({
   weather,
   setData,
+  setBgImage,
 }): JSX.Element => {
   const [locationInput, setLocationInput] = useState<string>("");
 
+  const getImage = async (weatherType: string) => {
+    const res = await fetch(
+      `https://api.unsplash.com/search/photos?page=1&query=${weatherType}&orientation=landscape&client_id=RNTe81amegYNhpG8EFv6NOPUJI-LkQenjcd4uzKIREg`
+    );
+    return await res.json();
+  };
+
   const locationSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(locationInput);
 
     const locationArr = locationInput.match(/([^,]+)/g) || ["", ""];
     const city = locationArr[0];
@@ -44,6 +52,23 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         city: data.name,
         humidity: data.main.humidity,
       });
+      let url = "";
+      if (data.main.temp < 40 && window.innerWidth > 1079) {
+        getImage("winter weather").then((data: any) => {
+          url = data.results[0].urls.full;
+          setBgImage(url);
+        });
+      } else if (data.main.temp < 55 && window.innerWidth > 1079) {
+        getImage("autumn weather").then((data: any) => {
+          url = data.results[0].urls.full;
+          setBgImage(url);
+        });
+      } else if (window.innerWidth > 1079) {
+        getImage("summer weather").then((data: any) => {
+          url = data.results[0].urls.full;
+          setBgImage(url);
+        });
+      }
     });
     // get five day forecast data
     weather.getFiveDayForecast().then((data) => {
@@ -59,7 +84,6 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
         holdWindSpeed = 0,
         holdHumidity = 0;
       forecastData.forEach((item: forecastDataListMainTypes, index: number) => {
-        console.log(item);
         holdHumidity += item.main.humidity;
         holdTemp += item.main.temp;
         holdFeel += item.main.temp;
@@ -101,15 +125,16 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
     <Form
       onSubmit={(e) => locationSubmitHandler(e)}
       className="mb-3 desktop-container"
+      style={{
+        backgroundColor: "#262626",
+        opacity: "75%",
+      }}
     >
-      <Form.Group
-        className="d-flex justify-content-between align-items-center"
-        controlId=""
-      >
+      <Form.Group className="d-flex align-items-center" controlId="">
         <Form.Label style={{ color: "white" }} className="m-0">
-          Search for a City, State:{" "}
+          Search for a City:{" "}
         </Form.Label>
-        <div className="d-flex">
+        <div className="d-flex ms-3">
           <Form.Control
             type=""
             placeholder="Enter a Location"

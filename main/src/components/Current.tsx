@@ -7,8 +7,6 @@ interface CurrentInterface {
 
 export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
   const currentWeatherData = data.current;
-  console.log(currentWeatherData);
-
   const colorByTemperature = (temp: number): { backgroundColor: string } => {
     let style = { backgroundColor: "" };
     if (temp < 32) {
@@ -37,15 +35,17 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
     <Card
       style={{
         marginBottom: "0.75rem",
-        // backgroundImage: `url("/weather-image.jpg")`,
-        // backgroundSize: "100% 100%",
-        // backgroundRepeat: "no-repeat",
-        // border: "none",
+        backgroundColor: "#262626",
+        opacity: "75%",
+        border: "0.1rem solid black",
       }}
       className="current-weather-container-desktop"
     >
       <Card.Header>
-        <ul className="p-0 m-0 d-flex justify-content-between">
+        <ul
+          className="p-0 m-0 d-flex justify-content-between"
+          style={{ color: "white", borderBottom: "0.1rem solid black" }}
+        >
           <li>{moment().format("ll")}</li>
           <li>
             {Math.abs(new Date().getHours() - 12) > 9
@@ -58,7 +58,8 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
           </li>
         </ul>
       </Card.Header>
-      <Card.Body>
+
+      <Card.Body style={{ color: "white" }}>
         <Card.Title className="margin-padding-none">
           <div className="d-flex flex-column">
             <span style={{ color: "red" }}>{currentWeatherData.city}</span>
@@ -67,55 +68,57 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
             </span>
           </div>
         </Card.Title>
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex flex-column">
-            <span className="fs-1 fw-bold">{currentWeatherData.temp}ºF</span>
-            <span>{currentWeatherData.description}</span>
-          </div>
-          <img
-            src={`https://openweathermap.org/img/wn/${currentWeatherData.icon}@2x.png`}
-            alt="weather-icon"
-            className="ms-5"
-          />
-        </div>
-        <ul className="p-0 m-0 d-flex justify-content-around">
-          <li className=" d-flex justify-content-between flex-column">
-            Low:
-            <span className="fw-bold rounded text-center">
-              {currentWeatherData.minTemp}ºF
-            </span>
-          </li>
-          <li className=" d-flex justify-content-between flex-column">
-            High:
-            <span className="fw-bold rounded text-center">
-              {currentWeatherData.maxTemp}ºF
-            </span>
-          </li>
-          <li className=" d-flex justify-content-between flex-column">
-            Humidity:
-            <span className="fw-bold rounded text-center">
-              {currentWeatherData.humidity}%
-            </span>
-          </li>
-          <li className=" d-flex justify-content-between flex-column">
-            Wind:
-            <div>
-              <span className="fw-bold rounded text-center">
-                {Math.round(currentWeatherData.windSpeed)}mph
-              </span>{" "}
-              <img
-                src="/direction.svg"
-                alt="direction"
-                className="arrow-size m-0 p-0"
-                style={{
-                  transform: `rotate(${
-                    currentWeatherData.windDirection - 180
-                  }deg)`,
-                }}
-              />
+        <div className="current-weather">
+          <div className="current-weather-main align-items-center">
+            <div className="d-flex flex-column">
+              <span className="fs-1 fw-bold">{currentWeatherData.temp}ºF</span>
+              <span>{currentWeatherData.description}</span>
             </div>
-          </li>
-        </ul>
+            <img
+              src={`https://openweathermap.org/img/wn/${currentWeatherData.icon}@2x.png`}
+              alt="weather-icon"
+              className="ms-5"
+            />
+          </div>
+          <ul className="current-weather-details-container">
+            <li className="current-weather-details-helper">
+              Low:
+              <span className="fw-bold rounded text-center current-weather-detail-text-spacing">
+                {currentWeatherData.minTemp}ºF
+              </span>
+            </li>
+            <li className=" current-weather-details-helper">
+              High:
+              <span className="fw-bold rounded text-centerm current-weather-detail-text-spacing">
+                {currentWeatherData.maxTemp}ºF
+              </span>
+            </li>
+            <li className=" current-weather-details-helper">
+              Humidity:
+              <span className="fw-bold rounded text-center current-weather-detail-text-spacing">
+                {currentWeatherData.humidity}%
+              </span>
+            </li>
+            <li className="current-wind">
+              Wind:
+              <div>
+                <span className="fw-bold rounded text-center current-weather-detail-text-spacing">
+                  {Math.round(currentWeatherData.windSpeed)}mph
+                </span>
+                <img
+                  src="/direction.svg"
+                  alt="direction"
+                  className="arrow-size m-0 p-0"
+                  style={{
+                    transform: `rotate(${
+                      currentWeatherData.windDirection - 180
+                    }deg)`,
+                  }}
+                />
+              </div>
+            </li>
+          </ul>
+        </div>
       </Card.Body>
     </Card>
   );
