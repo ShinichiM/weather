@@ -96,11 +96,11 @@ A single page application utilizing React and Typescript to display weather info
 
 ### Installation
 
-_Below is an example of how you can install and setting up this application. This will install any dependencies required to run this application
+Below is an example of how you can install and setting up this application. This will install any dependencies required to run this application
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/shinichiM/book-search-engine.git
+   git clone https://github.com/shinichiM/weather.git
    ```
 2. Install NPM packages
    ```sh
