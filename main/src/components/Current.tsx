@@ -48,7 +48,8 @@ export const Current: React.FC<CurrentInterface> = ({ data }): JSX.Element => {
         >
           <li>{moment().format("ll")}</li>
           <li>
-            {Math.abs(new Date().getHours() - 12) > 9
+            {Math.abs(new Date().getHours() - 12) > 9 &&
+            new Date().getHours() > 12
               ? new Date().toLocaleTimeString().split(" ")[0].substring(0, 5)
               : new Date()
                   .toLocaleTimeString()

@@ -55,17 +55,20 @@ export const SearchForm: React.FC<SearchFormInterface> = ({
       let url = "";
       if (data.main.temp < 40 && window.innerWidth > 1079) {
         getImage("winter weather").then((data: any) => {
-          url = data.results[0].urls.full;
+          let index = Math.floor(Math.random() * data.results.length);
+          url = data.results[index].urls.full;
           setBgImage(url);
         });
       } else if (data.main.temp < 55 && window.innerWidth > 1079) {
         getImage("autumn weather").then((data: any) => {
-          url = data.results[0].urls.full;
+          let index = Math.floor(Math.random() * data.results.length);
+          url = data.results[index].urls.full;
           setBgImage(url);
         });
       } else if (window.innerWidth > 1079) {
         getImage("summer weather").then((data: any) => {
-          url = data.results[0].urls.full;
+          let index = Math.floor(Math.random() * data.results.length);
+          url = data.results[index].urls.full;
           setBgImage(url);
         });
       }
